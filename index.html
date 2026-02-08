@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patch Test Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Patch Test Generator</h1>
+            <p>Select allergens to generate your patch test sites.</p>
+        </header>
+
+        <main>
+            <section class="controls">
+                <div class="control-group">
+                    <label for="series-select">Select Series:</label>
+                    <select id="series-select">
+                        <option value="">-- View All / Custom --</option>
+                        <!-- Options will be populated by JS -->
+                    </select>
+                </div>
+                <div class="control-group search-container">
+                    <label for="search-input">Search Allergens:</label>
+                    <div class="search-wrapper">
+                        <input type="text" id="search-input" placeholder="Search by name or location...">
+                        <button id="clear-search" class="clear-btn" title="Clear search">&times;</button>
+                    </div>
+                </div>
+                <div class="control-group mode-selection">
+                    <label>Interpretation Modes:</label>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="show-day2"> Day 2</label>
+                        <label><input type="checkbox" id="show-day7"> Day 7</label>
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="clear-all" class="btn secondary">Clear All</button>
+                    <button id="print-test" class="btn primary">Print / Save PDF</button>
+                </div>
+            </section>
+
+            <div class="workspace">
+                <section class="allergen-list-container">
+                    <h2>Available Allergens</h2>
+                    <table id="allergen-table">
+                        <thead>
+                            <tr>
+                                <th>Select</th>
+                                <th>Name</th>
+                                <th>Location</th>
+                            </tr>
+                        </thead>
+                        <tbody id="allergen-tbody">
+                            <!-- Rows will be populated by JS -->
+                        </tbody>
+                    </table>
+                </section>
+
+                <section class="generated-test-container">
+                    <div class="section-header">
+                        <h2>Generated Patch Test</h2>
+                        <div class="header-buttons">
+                            <button id="copy-narrative-btn" class="btn secondary small">Copy Narrative</button>
+                            <button id="copy-table-btn" class="btn secondary small">Copy Table</button>
+                        </div>
+                    </div>
+                    <div id="print-area">
+                        <table id="test-table">
+                            <thead>
+                                <tr id="test-header-row">
+                                    <th>Site</th>
+                                    <th>Allergen Name</th>
+                                    <th>Location</th>
+                                    <!-- D2/D7 headers added dynamically -->
+                                </tr>
+                            </thead>
+                            <tbody id="test-tbody">
+                                <!-- Generated list -->
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
