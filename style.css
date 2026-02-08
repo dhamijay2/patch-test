@@ -186,11 +186,15 @@ h2 {
 }
 
 .interpretation-select {
-    padding: 2px 4px;
+    padding: 8px 4px;
     font-size: 14px;
     width: 100%;
+    min-width: 120px;
     border: 1px solid var(--border-color);
-    border-radius: 3px;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+    box-sizing: border-box;
 }
 
 table {
@@ -200,9 +204,17 @@ table {
 }
 
 th, td {
-    padding: 12px;
+    padding: 10px 12px;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+}
+
+/* Ensure Day 2 and Day 7 columns don't shrink too much */
+#test-table th:nth-child(4), 
+#test-table th:nth-child(5),
+#test-table td:nth-child(4),
+#test-table td:nth-child(5) {
+    min-width: 140px;
 }
 
 th {

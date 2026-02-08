@@ -7,6 +7,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const testHeaderRow = document.getElementById('test-header-row');
     const clearBtn = document.getElementById('clear-all');
     const printBtn = document.getElementById('print-test');
+    const saveSessionBtn = document.getElementById('save-session');
+    const loadSessionBtn = document.getElementById('load-session');
+    const loadInput = document.getElementById('load-input');
     
     const showDay2Check = document.getElementById('show-day2');
     const showDay7Check = document.getElementById('show-day7');
@@ -345,6 +348,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     printBtn.addEventListener('click', () => {
         window.print();
+    });
+
+    saveSessionBtn.addEventListener('click', () => {
+        const sessionData = {
+            currentSeries: currentSeries,
+            selectionState: selectionState,
+            showDay2: showDay2Check.checked,
+            showDay7: showDay7Check.checked
+        };
+
+        const fileName = prompt("Enter a filename for your session:", "patch-test-session") || "patch-test-session";
+        const blob = new Blob([JSON.stringify(sessionData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${fileName}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+
+    loadSessionBtn.addEventListener('click', () => {
+        loadInput.click();
+    });
+
+    loadInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            try {
+                const data = JSON.parse(event.target.result);
+                
+                // Restore state
+                currentSeries = data.currentSeries || '';
+                selectionState = data.selectionState || {};
+                showDay2Check.checked = !!data.showDay2;
+                showDay7Check.checked = !!data.showDay7;
+                
+                // Update UI elements to reflect state
+                seriesSelect.value = currentSeries;
+                
+                renderAllergens();
+                updateGeneratedTest();
+                
+                // Reset input for next time
+                loadInput.value = '';
+                alert("Session loaded successfully!");
+            } catch (err) {
+                console.error("Error loading session:", err);
+                alert("Failed to load session. Please ensure the file is a valid JSON exported from this app.");
+            }
+        };
+        reader.readAsText(file);
     });
 
     init();
