@@ -1,4 +1,224 @@
 document.addEventListener('DOMContentLoaded', () => {
+            const collateHandoutsBtn = document.getElementById('collate-handouts');
+
+            // Allergen to PDF mapping (from review)
+            const allergenPdfMap = {
+                "1,3-Diphenylguanidine 1% pet.": ["DIPHENYLGUANIDINE.pdf"],
+                "2-Bromo-2-nitropropane-1,3-diol 0.5% pet.": ["2-BROMO-2-NITROPROPANE-13-DIOLBRONOPOL.pdf", "Formaldehyde_Avoidance_Diet.pdf"],
+                "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.": ["BENZOPHENONE-3.pdf"],
+                "2-Hydroxyethyl methacrylate 2% pet.": ["2-HYDROXYETHYL_METHACRYLATE.pdf"],
+                "2-Mercaptobenzothiazole (MBT) 1% pet.*": ["BENZOTHIAZOLES.pdf"],
+                "2-n-Octyl-4-isothiazolin-3-one 0.1% pet.": ["METHYLCHLOROISOTHIAZOLINONE.pdf", "METHYLISOTHIAZOLINONE.pdf"],
+                "2-tert-Butyl-4-methoxyphenol (BHA) 2% pet.": ["BUTYLHYDROXYANISOLE.pdf"],
+                "4-tert-Butylphenol formaldehyde resin (PTBP) 1% pet.*": ["PARATERTIARY BUTYLPHENOL FORMALDEHYDE RESIN.pdf"],
+                "Amidoamine 0.1% aq": ["AMIDOAMINE.pdf"],
+                "Bacitracin 20% pet. *": ["BACITRACIN.pdf"],
+                "Balsam Peru (Myroxylon pereirae) 25% pet.*": ["BALSAM_OF_PERU.pdf", "Balsam_of_Peru_Diet.pdf"],
+                "Benzocaine 5% pet.": ["BENZOCAINE.pdf"],
+                "Benzoic acid (benzolyperoxide) 1% pet.": ["BENZOIC_ACID.pdf", "Benzoic_Acid_Diet.pdf"],
+                "Benzyl alcohol 10% soft": ["BENZYL_ALCOHOL.pdf"],
+                "Benzyl salicylate 10% pet.": ["BENZYL_SALICYLATE.pdf"],
+                "Budesonide 0.1% pet.*": ["CORTICOSTEROIDS 1.pdf"],
+                "Carba mix 3% pet.*": ["CARBA_MIX.pdf"],
+                "Chloroxylenol (PCMX) 1% pet.": ["PCMX.pdf"],
+                "Cinnamic aldehyde 1% pet": ["CINNAMIC_ALDEHYDE.pdf"],
+                "Clobetasol-17-propionate 1% pet.": ["CORTICOSTEROIDS 1.pdf"],
+                "Cobalt (II) chloride 1% pet.*": ["COBALT.pdf", "Cobalt_Diet.pdf"],
+                "Cocamide DEA (Coconut diethanolamide) 0.5% pet.": ["COCAMIDE_DEA.pdf"],
+                "Cocamidopropyl betaine 1% aq.": ["COCAMIDOPROPYL_BETAINE.pdf"],
+                "Colophony 20% pet.*": ["COLOPHONY.pdf"],
+                "Compositae mix II 5% pet.": ["COMPOSITAE.pdf"],
+                "Decyl glucoside 5% pet.": ["DECYL_GLUCOSIDE.pdf"],
+                "Desoximetasone 1% pet.": ["CORTICOSTEROIDS 1.pdf"],
+                "Diazolidinyl urea 1% pet.*": ["Formaldehyde_Avoidance_Diet.pdf", "DIAZOLIDINYL_UREA.pdf"],
+                "Dibucaine hydrochloride 2.5% pet": ["ANESTHETICS.pdf"],
+                "Disperse blue 106/124 mix 1.0% pet.*": ["DISPERSE_BLUE_MIX.pdf"],
+                "Disperse orange 3 1% pet.": ["DISPERSE_ORANGE_DYE.pdf"],
+                "Disperse yellow 3 1% pet.": ["DISPERSE_YELLOW_DYE.pdf"],
+                "DMDM hydantoin 1% pet.": ["Formaldehyde_Avoidance_Diet.pdf", "DMDM_HYDANTOIN.pdf"],
+                "Epoxy resin 1% pet.*": ["EPOXY.pdf"],
+                "Ethyl acrylate 0.1% pet.": ["ETHYL_ACRYLATE.pdf"],
+                "Ethylhexyl salicylate 5% pet.": ["HOMOSALATE.pdf", "HOMOSALATE_.pdf"],
+                "Ethylenediamine dihydrochloride 1% pet.*": ["ETHYLENEDIAMINE.pdf"],
+                "Ethyleneurea melamine-formaldehyde mix 5% pet.": ["FORMALDEHYDE.pdf", "Formaldehyde_Avoidance_Diet.pdf"],
+                "Formaldehyde 2% aq.*": ["FORMALDEHYDE.pdf"],
+                "Fragrance mix I 8% pet.*": ["FRAGRANCE_MIX_1.pdf"],
+                "Fragrance mix II 14% pet": ["FRAGRANCE_MIX_II.pdf"],
+                "Fusidic acid sodium salt 2% pet.": [],
+                "Glutaral 0.5% pet.": ["GLUTARALDEHYDE.pdf"],
+                "Glyceryl thioglycolate 1% pet.": ["GLYCERYL THIOGLYCOLATE.pdf"],
+                "Gold sodium thiosulfate dihydrate 0.5% pet.*": ["GOLD.pdf"],
+                "Hydroxyisohexyl 3-cyclohexene carboxaldeyde 5% pet.": ["FRAGRANCE.pdf"],
+                "Hydroperoxides of Limonene 0.3% pet.": ["LIMONENE.pdf"],
+                "Hydroperoxides of Linalool 1% pet.": ["LINALOOL.pdf"],
+                "Imidazolidinyl urea 2% pet.*": ["IMIDAZOLIDINYL_UREA.pdf", "Formaldehyde_Avoidance_Diet.pdf"],
+                "Iodopropynyl butylcarbamate 0.2% pet.": ["IODOPROPYNYL BUTYLCARBAMATE.pdf"],
+                "Isopropyl myristate 20% pet.": ["isopropyl_myristate.pdf"],
+                "Isoamyl p-methoxycinnamate 10% pet.": ["isoamyl_p-methoxycinnamate.pdf"],
+                "Lanolin alcohol (Amerchol 101) 50% pet.*": ["LANOLIN.pdf"],
+                "Lidocaine 15% pet.": ["LIDOCAINE.pdf"],
+                "Mercapto mix 1% pet.*": ["BENZOTHIAZOLES_MERCAPTO_MIX.pdf"],
+                "Methyldibromo glutaronitrile 0.5% pet.": ["PHENOXYETHANOL.pdf"],
+                "Methyl methacrylate 2% pet.": ["METHYL_METHACRYLATE.pdf"],
+                "Methylchloroisothiazolinone/methylisothiazolinone 0.02% aq.*": ["METHYLISOTHIAZOLINONE.pdf"],
+                "Methylisothiazolinone 0.2% aq.": ["METHYLISOTHIAZOLINONE.pdf"],
+                "Mixed dialkyl thioureas 1% pet.": ["DIALKYL_THIOUREAS.pdf"],
+                "Neomycin 20% pet.*": ["NEOMYCIN.pdf"],
+                "Nickel sulfate 2.5% pet.*": ["NICKEL.pdf", "Low-Nickel_Diet.pdf"],
+                "Oleamidopropyl dimethylamine 0.1% aq.": ["OLEAMIDOPROPYL DIMETHYLAMINE.pdf"],
+                "Paraben mix 12% pet. *": ["PARABEN.pdf", "Paraben_Diet.pdf"],
+                "Polysorbate 80 5% pet.": ["SORBITAN SESQUIOLEATE.pdf"],
+                "Potassium dichromate 0.25% pet.*": ["CHROMATE.pdf", "Chromium_Diet.pdf"],
+                "p-Phenylenediamine (PPD) 1% pet.*": ["PARAPHENYLENEDIAMINE.pdf"],
+                "Propolis 10% pet.": ["PROPOLIS.pdf"],
+                "Propylene glycol 30% aq.": ["PROPYLENE GLYCOL.pdf", "Propylene_Glycol_Diet.pdf"],
+                "Quaternium-15 2% pet.": ["QUATERNIUM-15.pdf", "Formaldehyde_Avoidance_Diet.pdf"],
+                "Sesquiterpene lactone mix 0.1% pet.": ["SESQUITERPENE LACTONES.pdf"],
+                "Tea tree oil 5% pet.": ["TEA TREE OIL.pdf"],
+                "Textile dye mix 6.6% pet.": ["TEXTILE_DYES.pdf"],
+                "Thimerosal 0.1% pet.": ["Thimerosal.pdf"],
+                "Thiuram mix 1% pet.*": ["THIURAM MIX.pdf"],
+                "Tixocortol-21-pivalate 1% pet.*": ["CORTICOSTEROIDS 1.pdf"],
+                "Tocopherol 100%": ["VITAMIN E.pdf"],
+                "Toluenesulfonamide formaldehyde resin 10%": ["TOSYLAMIDE FORMALDEHYDE RESIN.pdf", "Formaldehyde_Avoidance_Diet.pdf"],
+                "Triethanolamine 2% pet.": ["TRIETHANOLAMINE.pdf"],
+                "Ylang-ylang 2% pet.": ["YLANG YLANG OIL.pdf"],
+                "Titanium": []
+            };
+
+            collateHandoutsBtn.addEventListener('click', () => {
+                // Find positive allergens
+                const positives = Object.entries(selectionState)
+                    .filter(([name, state]) => {
+                        return [state.day2, state.day7].some(val => val === '1+' || val === '2+' || val === '3+');
+                    })
+                    .map(([name]) => name);
+
+                // Collate PDFs
+                const pdfs = Array.from(new Set(positives.flatMap(name => allergenPdfMap[name] || [])));
+
+                if (pdfs.length === 0) {
+                    alert('No positive allergens with mapped handouts.');
+                    return;
+                }
+
+                // Fetch and merge PDFs using PDF-lib (correct async usage)
+                (async () => {
+                    try {
+                        const buffers = await Promise.all(
+                            pdfs.map(pdf => fetch(`patch test handouts/${pdf}`).then(r => {
+                                if (!r.ok) throw new Error(`Failed to fetch ${pdf}`);
+                                return r.arrayBuffer();
+                            }))
+                        );
+                        const mergedPdf = await PDFLib.PDFDocument.create();
+                        for (const buffer of buffers) {
+                            const pdfDoc = await PDFLib.PDFDocument.load(buffer);
+                            const pages = await mergedPdf.copyPages(pdfDoc, pdfDoc.getPageIndices());
+                            pages.forEach(page => mergedPdf.addPage(page));
+                        }
+                        const mergedBytes = await mergedPdf.save();
+                        const blob = new Blob([mergedBytes], { type: 'application/pdf' });
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'collated-handouts.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        URL.revokeObjectURL(url);
+                    } catch (err) {
+                        alert('Failed to collate PDFs. Some handouts may be missing or inaccessible.');
+                        console.error(err);
+                    }
+                })();
+            });
+        const exportPngBtn = document.getElementById('export-png-btn');
+        const exportRtfBtn = document.getElementById('export-rtf-btn');
+        // Export table as PNG (copy to clipboard)
+        exportPngBtn.addEventListener('click', () => {
+            const printArea = document.getElementById('print-area');
+            if (!printArea) return;
+            html2canvas(printArea).then(canvas => {
+                canvas.toBlob(blob => {
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    navigator.clipboard.write([item]).then(() => {
+                        exportPngBtn.textContent = "Copied PNG!";
+                        setTimeout(() => exportPngBtn.textContent = "Export as PNG", 2000);
+                    }, () => {
+                        alert("Failed to copy PNG to clipboard.");
+                    });
+                });
+            });
+        });
+
+        // Export table as RTF (copy to clipboard)
+        exportRtfBtn.addEventListener('click', () => {
+            const rows = Array.from(testTbody.querySelectorAll('tr'));
+            if (rows.length === 0) {
+                alert("No allergens selected!");
+                return;
+            }
+            let rtf = '{\rtf1\ansi\deff0\n';
+            rtf += '{\b Site}\tab {\b Allergen Name}\tab {\b Location}';
+            if (showDay2Check.checked) rtf += '\tab {\b Day 2}';
+            if (showDay7Check.checked) rtf += '\tab {\b Day 7}';
+            rtf += '\par\n';
+            let siteNum = 1;
+            rows.forEach((tr, idx) => {
+                const cells = Array.from(tr.querySelectorAll('td'));
+                rtf += `${siteNum}\tab ${cells[1].textContent}\tab ${cells[2].textContent}`;
+                let cellIdx = 3;
+                if (showDay2Check.checked) {
+                    rtf += `\tab ${cells[cellIdx].querySelector('select').value}`;
+                    cellIdx++;
+                }
+                if (showDay7Check.checked) {
+                    rtf += `\tab ${cells[cellIdx].querySelector('select').value}`;
+                }
+                rtf += '\par\n';
+                siteNum++;
+            });
+            rtf += '}';
+            // Copy RTF to clipboard, fallback to plain text if not supported
+            if (window.ClipboardItem && navigator.clipboard) {
+                const rtfBlob = new Blob([rtf], { type: 'text/rtf' });
+                const data = [new ClipboardItem({ 'text/rtf': rtfBlob })];
+                navigator.clipboard.write(data).then(() => {
+                    exportRtfBtn.textContent = "Copied RTF!";
+                    setTimeout(() => exportRtfBtn.textContent = "Export as RTF", 2000);
+                }, () => {
+                    // Fallback: copy as plain text table
+                    let plain = 'Site\tAllergen Name\tLocation';
+                    if (showDay2Check.checked) plain += '\tDay 2';
+                    if (showDay7Check.checked) plain += '\tDay 7';
+                    plain += '\n';
+                    let siteNum = 1;
+                    rows.forEach((tr, idx) => {
+                        const cells = Array.from(tr.querySelectorAll('td'));
+                        plain += `${siteNum}\t${cells[1].textContent}\t${cells[2].textContent}`;
+                        let cellIdx = 3;
+                        if (showDay2Check.checked) {
+                            plain += `\t${cells[cellIdx].querySelector('select').value}`;
+                            cellIdx++;
+                        }
+                        if (showDay7Check.checked) {
+                            plain += `\t${cells[cellIdx].querySelector('select').value}`;
+                        }
+                        plain += '\n';
+                        siteNum++;
+                    });
+                    navigator.clipboard.writeText(plain).then(() => {
+                        exportRtfBtn.textContent = "Copied as Text!";
+                        setTimeout(() => exportRtfBtn.textContent = "Export as RTF", 2000);
+                    }, () => {
+                        alert("Failed to copy RTF or text to clipboard.");
+                    });
+                });
+            } else {
+                alert("Clipboard API not supported for RTF. Try copying as text instead.");
+            }
+        });
     const seriesSelect = document.getElementById('series-select');
     const searchInput = document.getElementById('search-input');
     const clearSearchBtn = document.getElementById('clear-search');

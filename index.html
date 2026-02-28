@@ -41,6 +41,7 @@
                     <button id="save-session" class="btn secondary">Save Session</button>
                     <button id="load-session" class="btn secondary">Load Session</button>
                     <button id="export-list" class="btn secondary">Export List</button>
+                    <button id="collate-handouts" class="btn secondary">Collate Handouts</button>
                     <button id="print-test" class="btn primary">Print / Save PDF</button>
                     <input type="file" id="load-input" accept=".json" style="display: none;">
                 </div>
@@ -69,6 +70,8 @@
                         <div class="header-buttons">
                             <button id="copy-narrative-btn" class="btn secondary small">Copy Narrative</button>
                             <button id="copy-table-btn" class="btn secondary small">Copy Table</button>
+                            <button id="export-png-btn" class="btn secondary small">Export as PNG</button>
+                            <button id="export-rtf-btn" class="btn secondary small">Export as RTF</button>
                         </div>
                     </div>
                     <div id="print-area">
@@ -92,5 +95,7 @@
     </div>
     <script src="data.js"></script>
     <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
 </body>
 </html>
