@@ -7,6 +7,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const testHeaderRow = document.getElementById('test-header-row');
     const clearBtn = document.getElementById('clear-all');
     const printBtn = document.getElementById('print-test');
+    const exportListBtn = document.getElementById('export-list');
+        // Export selected allergens and interpretations as CSV
+        exportListBtn.addEventListener('click', () => {
+            const selectedList = Object.keys(selectionState).map(name => ({
+                name: name,
+                ...selectionState[name]
+            }));
+            if (selectedList.length === 0) {
+                alert("No allergens selected!");
+                return;
+            }
+            let csv = 'Site,Allergen Name,Location';
+            if (showDay2Check.checked) csv += ',Day 2';
+            if (showDay7Check.checked) csv += ',Day 7';
+            csv += '\n';
+            let siteNum = 1;
+            selectedList.forEach(allergen => {
+                let row = `${siteNum},"${allergen.name}",${allergen.location}`;
+                if (showDay2Check.checked) row += `,"${allergen.day2 || ''}"`;
+                if (showDay7Check.checked) row += `,"${allergen.day7 || ''}"`;
+                csv += row + '\n';
+                siteNum++;
+            });
+            const blob = new Blob([csv], { type: 'text/csv' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'patch-test-list.csv';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
     const saveSessionBtn = document.getElementById('save-session');
     const loadSessionBtn = document.getElementById('load-session');
     const loadInput = document.getElementById('load-input');
