@@ -402,7 +402,7 @@ const allergenData = {
     },
     {
       "name": "Titanium",
-      "location": "n/a",
+      "location": "999",
       "selected": false
     }
   ],
@@ -2084,7 +2084,7 @@ const allergenData = {
     },
     {
       "name": "Titanium",
-      "location": "n/a",
+      "location": "999",
       "selected": false
     }
   ],
@@ -2528,7 +2528,7 @@ const allergenData = {
     },
     {
       "name": "Titanium",
-      "location": "n/a",
+      "location": "999",
       "selected": true
     }
   ]
