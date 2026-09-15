@@ -11,7 +11,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.",
+      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-10) 10% pet.",
       "location": "34",
       "selected": false
     },
@@ -156,7 +156,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Disperse yellow 3 1% pet.",
+      "name": "Disperse yellow 3 0.4% pet.",
       "location": "51",
       "selected": false
     },
@@ -261,7 +261,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Lanolin alcohol (Amerchol 101) 50% pet.*",
+      "name": "Lanolin Alcohol 30% pet.*",
       "location": "7",
       "selected": false
     },
@@ -438,7 +438,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Lanolin alcohol (Amerchol 101) 50% pet.*",
+      "name": "Lanolin Alcohol 30% pet.*",
       "location": "7",
       "selected": false
     },
@@ -573,7 +573,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.",
+      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-10) 10% pet.",
       "location": "34",
       "selected": false
     },
@@ -658,7 +658,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Disperse yellow 3 1% pet.",
+      "name": "Disperse yellow 3 0.4% pet.",
       "location": "51",
       "selected": false
     },
@@ -820,7 +820,7 @@ const allergenData = {
       "selected": true
     },
     {
-      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.",
+      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-10) 10% pet.",
       "location": "34",
       "selected": true
     },
@@ -965,7 +965,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Disperse yellow 3 1% pet.",
+      "name": "Disperse yellow 3 0.4% pet.",
       "location": "51",
       "selected": false
     },
@@ -1070,7 +1070,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Lanolin alcohol (Amerchol 101) 50% pet.*",
+      "name": "Lanolin Alcohol 30% pet.*",
       "location": "7",
       "selected": true
     },
@@ -1222,7 +1222,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.",
+      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-10) 10% pet.",
       "location": "34",
       "selected": false
     },
@@ -1367,7 +1367,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Disperse yellow 3 1% pet.",
+      "name": "Disperse yellow 3 0.4% pet.",
       "location": "51",
       "selected": false
     },
@@ -1472,7 +1472,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Lanolin alcohol (Amerchol 101) 50% pet.*",
+      "name": "Lanolin Alcohol 30% pet.*",
       "location": "7",
       "selected": false
     },
@@ -1693,7 +1693,7 @@ const allergenData = {
       "selected": true
     },
     {
-      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.",
+      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-10) 10% pet.",
       "location": "34",
       "selected": true
     },
@@ -1838,7 +1838,7 @@ const allergenData = {
       "selected": true
     },
     {
-      "name": "Disperse yellow 3 1% pet.",
+      "name": "Disperse yellow 3 0.4% pet.",
       "location": "51",
       "selected": true
     },
@@ -1943,7 +1943,7 @@ const allergenData = {
       "selected": true
     },
     {
-      "name": "Lanolin alcohol (Amerchol 101) 50% pet.*",
+      "name": "Lanolin Alcohol 30% pet.*",
       "location": "7",
       "selected": true
     },
@@ -2137,7 +2137,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-3) 10% pet.",
+      "name": "2-Hydroxy-4-methoxybenzophenone (benzophenone-10) 10% pet.",
       "location": "34",
       "selected": false
     },
@@ -2282,7 +2282,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Disperse yellow 3 1% pet.",
+      "name": "Disperse yellow 3 0.4% pet.",
       "location": "51",
       "selected": false
     },
@@ -2387,7 +2387,7 @@ const allergenData = {
       "selected": false
     },
     {
-      "name": "Lanolin alcohol (Amerchol 101) 50% pet.*",
+      "name": "Lanolin Alcohol 30% pet.*",
       "location": "7",
       "selected": false
     },
