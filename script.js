@@ -315,7 +315,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderAllergens() {
         allergenTbody.innerHTML = '';
-        const allergens = currentSeries === '' ? getAllAvailableAllergens() : allergenData[currentSeries];
+        
+        // Get selected series from the multiple select
+        const selectedSeries = Array.from(seriesSelect.selectedOptions).map(opt => opt.value);
+        let allergens = [];
+        
+        // If no series selected or only "--View All / Custom--" is selected, show all
+        if (selectedSeries.length === 0 || (selectedSeries.length === 1 && selectedSeries[0] === '')) {
+            allergens = getAllAvailableAllergens();
+        } else {
+            // Combine allergens from all selected series
+            const allergenMap = new Map();
+            selectedSeries.forEach(series => {
+                if (series !== '' && allergenData[series]) {
+                    allergenData[series].forEach(allergen => {
+                        allergenMap.set(allergen.name, allergen);
+                    });
+                }
+            });
+            allergens = Array.from(allergenMap.values());
+        }
+        
         const searchTerm = searchInput.value.toLowerCase();
 
         allergens.forEach(allergen => {
@@ -560,22 +580,42 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     seriesSelect.addEventListener('change', (e) => {
-        currentSeries = e.target.value;
-        selectionState = {}; 
+        const selectedSeries = Array.from(e.target.selectedOptions).map(opt => opt.value);
         
-        if (currentSeries === '80 Series') {
-            allergenData[currentSeries].forEach(a => {
-                if (a.name.toLowerCase() !== 'titanium') {
-                    selectionState[a.name] = { day2: 'Normal', day7: 'Normal', location: a.location };
-                }
-            });
-        } else if (currentSeries !== '') {
-            allergenData[currentSeries].forEach(a => {
-                if (a.selected) {
-                    selectionState[a.name] = { day2: 'Normal', day7: 'Normal', location: a.location };
-                }
-            });
+        // Clear current selection
+        selectionState = {};
+        
+        // If no series selected (empty or only "--View All / Custom--"), show all allergens
+        if (selectedSeries.length === 0 || (selectedSeries.length === 1 && selectedSeries[0] === '')) {
+            renderAllergens();
+            updateGeneratedTest();
+            return;
         }
+        
+        // Combine allergens from all selected series
+        const allergenSet = new Map();
+        selectedSeries.forEach(series => {
+            if (series !== '' && allergenData[series]) {
+                if (series === '80 Series') {
+                    allergenData[series].forEach(a => {
+                        if (a.name.toLowerCase() !== 'titanium') {
+                            allergenSet.set(a.name, a);
+                        }
+                    });
+                } else {
+                    allergenData[series].forEach(a => {
+                        if (a.selected) {
+                            allergenSet.set(a.name, a);
+                        }
+                    });
+                }
+            }
+        });
+        
+        // Auto-select allergens from selected series
+        allergenSet.forEach((allergen, name) => {
+            selectionState[name] = { day2: 'Normal', day7: 'Normal', location: allergen.location };
+        });
         
         renderAllergens();
         updateGeneratedTest();
